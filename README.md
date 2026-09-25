@@ -12,6 +12,8 @@ Problem Statement ID – SIH26189​
 <br>
 PS Category- Software​
 <br>
+Team ID - 160609
+<br>
 Problem Statement: AI-Powered Criminal Network Analysis System.
 <br>
 Project Brief: Crime-related information is often fragmented across FIRs, call records, financial data, surveillance reports, and other sources. This makes it difficult and time-consuming for investigators to identify hidden relationships, detect patterns, and connect related cases. CrimeX aims to address this by bringing these insights together into a unified platform for faster and more connected investigations.
