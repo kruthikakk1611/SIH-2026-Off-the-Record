@@ -16,7 +16,7 @@ Problem Statement ID – SIH26189​
 <br>
 PS Category- Software​
 <br>
-Problem Statement: <b> AI-Powered Criminal Network Analysis System. </b>
+Problem Statement: <b> AI-Powered Criminal Network Analysis System </b>
 <br>
 <br>
 Project Brief:
