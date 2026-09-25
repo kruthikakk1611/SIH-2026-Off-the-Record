@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+  
+  /* Hide all elements except the printable court report container */
+  body > *:not(#root) {
+    display: none !important;
+  }
+  
+  .no-print, 
+  button, 
+  nav, 
+  header, 
+  aside {
+    display: none !important;
+  }
+  
+  #printable-court-report {
+    position: static !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    background: white !important;
+    color: #0f172a !important;
+    overflow: visible !important;
+  }
+
+  .print-page-break {
+    page-break-before: always;
+  }
+}

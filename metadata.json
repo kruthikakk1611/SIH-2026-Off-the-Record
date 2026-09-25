@@ -1,0 +1,8 @@
+{
+  "name": "Remix CrimeX_prototype",
+  "description": "AI-powered criminal network investigation and intelligence platform for authorized police and law-enforcement personnel.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
