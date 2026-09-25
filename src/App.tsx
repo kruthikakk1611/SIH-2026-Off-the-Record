@@ -251,12 +251,13 @@ export default function App() {
   // Route Guard: If an officer without case-specific Secret Room clearance attempts to access secret-room, redirect to full-case
   useEffect(() => {
     if (currentPage === 'secret-room') {
-      const auth = checkOfficerCaseSecretRoomAccess(officer, selectedCase);
+      const activeRoom = secretRooms.find((r) => r.caseId === selectedCase.id) || null;
+      const auth = checkOfficerCaseSecretRoomAccess(officer, selectedCase, undefined, activeRoom);
       if (!auth.allowed) {
         setCurrentPage('full-case');
       }
     }
-  }, [currentPage, officer, selectedCase]);
+  }, [currentPage, officer, selectedCase, secretRooms]);
 
   // Sync to localStorage
   useEffect(() => {
@@ -797,8 +798,11 @@ export default function App() {
           )}
 
           {currentPage === 'secret-room' && (() => {
-            // Strictly enforce dual authorization: role clearance AND active case assignment
-            const caseAuth = checkOfficerCaseSecretRoomAccess(officer, selectedCase);
+            const activeRoom =
+              secretRooms.find((r) => r.caseId === selectedCase.id) || null;
+
+            // Strictly enforce dual authorization: role clearance AND active case assignment / room membership
+            const caseAuth = checkOfficerCaseSecretRoomAccess(officer, selectedCase, undefined, activeRoom);
             if (!caseAuth.allowed) {
               return (
                 <div className="bg-white border border-red-200 rounded-2xl p-8 text-center space-y-4 max-w-lg mx-auto shadow-2xs">
@@ -824,9 +828,6 @@ export default function App() {
                 </div>
               );
             }
-
-            const activeRoom =
-              secretRooms.find((r) => r.caseId === selectedCase.id) || null;
 
             if (!activeRoom) {
               return (

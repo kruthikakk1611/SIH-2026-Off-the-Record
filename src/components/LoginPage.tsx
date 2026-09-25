@@ -95,10 +95,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onQuickDemoBypass
   const [selectedState, setSelectedState] = useState<string>('Karnataka');
   const [selectedCity, setSelectedCity] = useState<string>('Bengaluru');
   const [selectedDistrict, setSelectedDistrict] = useState<string>('Bengaluru Urban');
-  const [selectedDesignation, setSelectedDesignation] = useState<string>('Police Inspector (PI)');
+  const [selectedDesignation, setSelectedDesignation] = useState<string>('Sub-Inspector of Police (PSI)');
 
-  // Step 2: Police Government ID & Password
-  const [govId, setGovId] = useState<string>('OFF-2047');
+  // Step 2: Police Government ID & Password (Default: Profile B - Sub-Inspector Rajesh Nair OFF-3319)
+  const [govId, setGovId] = useState<string>('OFF-3319');
   const [password, setPassword] = useState<string>('investigator@2025');
   const [showPassword, setShowPassword] = useState<boolean>(false);
 
@@ -574,8 +574,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onQuickDemoBypass
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1.5 flex items-center justify-between">
                   <span>{t('Police Government ID')}</span>
-                  <span className="text-[10px] font-mono text-blue-400 bg-[#181b26]/80 px-1.5 py-0.5 rounded border border-slate-700/60">
-                    {t('Default')}: OFF-2047
+                  <span className="text-[10px] font-mono text-indigo-400 bg-[#181b26]/80 px-1.5 py-0.5 rounded border border-indigo-500/40">
+                    {t('Default')}: OFF-3319
                   </span>
                 </label>
                 <div className="relative">
@@ -584,8 +584,8 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onQuickDemoBypass
                     type="text"
                     value={govId}
                     onChange={(e) => setGovId(e.target.value)}
-                    placeholder={t('Enter Official Government ID (e.g. OFF-2047)')}
-                    className="w-full px-3.5 py-2.5 bg-[#090b10] border border-slate-700/90 rounded-xl text-sm text-slate-100 font-mono placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+                    placeholder={t('Enter Official Government ID (e.g. OFF-3319)')}
+                    className="w-full px-3.5 py-2.5 bg-[#090b10] border border-slate-700/90 rounded-xl text-sm text-slate-100 font-mono placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
                   />
                   <span className="absolute right-3 top-2.5 text-[11px] text-slate-500 font-mono pointer-events-none">
                     GOV-ID
@@ -606,7 +606,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onQuickDemoBypass
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder={t('Enter officer security password')}
-                    className="w-full px-3.5 py-2.5 pr-10 bg-[#090b10] border border-slate-700/90 rounded-xl text-sm text-slate-100 font-mono placeholder-slate-500 focus:outline-none focus:border-blue-500 transition-colors"
+                    className="w-full px-3.5 py-2.5 pr-10 bg-[#090b10] border border-slate-700/90 rounded-xl text-sm text-slate-100 font-mono placeholder-slate-500 focus:outline-none focus:border-indigo-500 transition-colors"
                   />
                   <button
                     type="button"
@@ -656,7 +656,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onQuickDemoBypass
                 id="btn-demo-officer-a"
                 onClick={() => onLogin(DEMO_OFFICER_A)}
                 disabled={isVerifying}
-                className="w-full p-2.5 rounded-xl bg-[#141722] hover:bg-slate-800 border border-slate-700/80 text-left transition-colors flex items-center justify-between group cursor-pointer"
+                className={`w-full p-2.5 rounded-xl text-left transition-colors flex items-center justify-between group cursor-pointer ${
+                  govId.trim().toUpperCase() === 'OFF-2047'
+                    ? 'bg-blue-950/40 border-2 border-blue-500 ring-1 ring-blue-500/50 shadow-md shadow-blue-950/50'
+                    : 'bg-[#141722] hover:bg-slate-800 border border-slate-700/80'
+                }`}
               >
                 <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-lg bg-blue-950 border border-blue-600/50 flex items-center justify-center text-blue-400 shrink-0 font-mono text-xs font-bold">
@@ -678,29 +682,38 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onQuickDemoBypass
                 </div>
               </button>
 
-              {/* Profile 2: Investigating Officer B (Special Investigating Team Officer) */}
+              {/* Profile 2: Investigating Officer B (Special Investigating Team Officer) - Selected / Highlighted by default */}
               <button
                 type="button"
                 id="btn-demo-officer-b"
                 onClick={() => onLogin(DEMO_OFFICER_B)}
                 disabled={isVerifying}
-                className="w-full p-2.5 rounded-xl bg-[#141722] hover:bg-slate-800 border border-slate-700/80 text-left transition-colors flex items-center justify-between group cursor-pointer"
+                className={`w-full p-2.5 rounded-xl text-left transition-all flex items-center justify-between group cursor-pointer ${
+                  govId.trim().toUpperCase() === 'OFF-3319' || !['OFF-2047', 'DGP-0001'].includes(govId.trim().toUpperCase())
+                    ? 'bg-indigo-950/50 border-2 border-indigo-500 ring-1 ring-indigo-400/60 shadow-lg shadow-indigo-950/60'
+                    : 'bg-[#141722] hover:bg-slate-800 border border-slate-700/80'
+                }`}
               >
                 <div className="flex items-center gap-2.5">
-                  <div className="w-7 h-7 rounded-lg bg-indigo-950 border border-indigo-600/50 flex items-center justify-center text-indigo-400 shrink-0 font-mono text-xs font-bold">
+                  <div className="w-7 h-7 rounded-lg bg-indigo-900 border border-indigo-400 flex items-center justify-center text-indigo-300 shrink-0 font-mono text-xs font-bold shadow-xs">
                     B
                   </div>
                   <div>
-                    <div className="text-xs font-bold text-white group-hover:text-indigo-400 transition-colors">
-                      Sub-Inspector Rajesh Nair
+                    <div className="text-xs font-bold text-white group-hover:text-indigo-300 transition-colors flex items-center gap-1.5">
+                      <span>Sub-Inspector Rajesh Nair</span>
+                      {(govId.trim().toUpperCase() === 'OFF-3319' || !['OFF-2047', 'DGP-0001'].includes(govId.trim().toUpperCase())) && (
+                        <span className="text-[9px] font-mono uppercase px-1.5 py-0.2 rounded bg-indigo-500/25 text-indigo-300 border border-indigo-400/40">
+                          {t('Default Selected')}
+                        </span>
+                      )}
                     </div>
-                    <div className="text-[11px] text-slate-400">
+                    <div className="text-[11px] text-indigo-200/80">
                       {t('Special Investigating Team Officer (Investigating Officer B) • SIT (OFF-3319)')}
                     </div>
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-950/80 text-indigo-300 border border-indigo-700/60">
+                  <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded bg-indigo-900/80 text-indigo-200 border border-indigo-600/70 shadow-xs">
                     SIT Officer
                   </span>
                 </div>
@@ -712,7 +725,11 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin, onQuickDemoBypass
                 id="btn-demo-dgp"
                 onClick={() => onLogin(DEMO_DGP)}
                 disabled={isVerifying}
-                className="w-full p-2.5 rounded-xl bg-[#141722] hover:bg-slate-800 border border-blue-900/60 text-left transition-colors flex items-center justify-between group cursor-pointer shadow-xs"
+                className={`w-full p-2.5 rounded-xl text-left transition-colors flex items-center justify-between group cursor-pointer shadow-xs ${
+                  govId.trim().toUpperCase() === 'DGP-0001'
+                    ? 'bg-purple-950/40 border-2 border-purple-500 ring-1 ring-purple-500/50 shadow-md shadow-purple-950/50'
+                    : 'bg-[#141722] hover:bg-slate-800 border border-blue-900/60'
+                }`}
               >
                 <div className="flex items-center gap-2.5">
                   <div className="w-7 h-7 rounded-lg bg-purple-950 border border-purple-500/50 flex items-center justify-center text-purple-300 shrink-0 font-mono text-xs font-bold">

@@ -1,4 +1,4 @@
-import { OfficerProfile, CaseRecord } from '../types';
+import { OfficerProfile, CaseRecord, SecretRoom } from '../types';
 
 /**
  * Role-Based Secret Room Demonstration Profiles:
@@ -318,7 +318,8 @@ export function checkOfficerCanManageSecretRoom(officer: OfficerProfile | null):
 export function checkOfficerCaseSecretRoomAccess(
   officer: OfficerProfile | null,
   caseItem: CaseRecord | null,
-  accessOverrides?: Record<string, boolean>
+  accessOverrides?: Record<string, boolean>,
+  secretRoom?: SecretRoom | null
 ): { allowed: boolean; reason?: string } {
   if (!officer) {
     return { allowed: false, reason: 'Authentication required' };
@@ -352,6 +353,19 @@ export function checkOfficerCaseSecretRoomAccess(
   const officerId = officer.id.toLowerCase();
   const officerBadge = officer.badge ? officer.badge.toLowerCase() : '';
   const officerName = officer.name.toLowerCase();
+
+  // Check if officer is directly in the active secret room roster for this case
+  if (secretRoom && secretRoom.members) {
+    const isRoomMember = secretRoom.members.some(
+      (m) =>
+        m.userId.toLowerCase() === officerId ||
+        (m.name && m.name.toLowerCase() === officerName) ||
+        (m.badge && officerBadge && m.badge.toLowerCase() === officerBadge)
+    );
+    if (isRoomMember) {
+      return { allowed: true };
+    }
+  }
 
   // Explicit authorized list for this case
   if (caseItem.authorizedSecretRoomOfficers && caseItem.authorizedSecretRoomOfficers.length > 0) {
