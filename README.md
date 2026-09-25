@@ -1,4 +1,4 @@
-<b> <h2> CRIMEX <h2> </b>
+<b> <h2> CRIMEX </h2> </b>
 <br>
 Smart India Hackathon 2026
 <br>
